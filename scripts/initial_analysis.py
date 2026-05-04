@@ -25,7 +25,7 @@ from pathlib import Path
 import pandas as pd
 
 EXPERIMENT_DIR = Path("../data/experiments/2026-05-04")
-results = json.loads((EXPERIMENT_DIR / "results.json").read_text())
+results = json.loads((EXPERIMENT_DIR / "results.json").read_text())["results"]
 print(f"Loaded {len(results)} samples from {EXPERIMENT_DIR}")
 
 # %% [markdown]
