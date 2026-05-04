@@ -5,7 +5,6 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Load environment variables (e.g. ANTHROPIC_API_KEY)
 if [ -f "${SCRIPT_DIR}/.env" ]; then
     set -a
     source "${SCRIPT_DIR}/.env"
@@ -14,4 +13,4 @@ fi
 
 : "${ANTHROPIC_API_KEY:?Set ANTHROPIC_API_KEY in .env or environment}"
 
-exec "${SCRIPT_DIR}/.venv/bin/python" -m policy_forge "$@"
+exec "${SCRIPT_DIR}/.venv/bin/python" "${SCRIPT_DIR}/scripts/run_pipeline.py" "$@"

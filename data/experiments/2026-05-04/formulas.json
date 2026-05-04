@@ -1,0 +1,129 @@
+{
+  "formulas": [
+    {
+      "name": "formula_003d",
+      "code": "Or(And(Not(V1), Not(V3), Not(V4)),\n   And(V2, Not(V3), Not(V4)),\n   And(Not(V2), V3, Not(V4)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) (not V3) (not V4))\n       (and V2 (not V3) (not V4))\n       (and (not V2) V3 (not V4)))))\n"
+    },
+    {
+      "name": "formula_012c",
+      "code": "Or(And(V2, Not(V3), Not(V4)),\n   And(V1, Not(V2), V3, Not(V4)),\n   And(Not(V1), Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V2 (not V3) (not V4))\n       (and V1 (not V2) V3 (not V4))\n       (and (not V1) (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_016e",
+      "code": "Or(And(V1, Not(V3), Not(V4)),\n   And(V1, Not(V2), Not(V4)),\n   And(Not(V1), V2, Not(V4)),\n   And(Not(V1), Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 (not V3) (not V4))\n       (and V1 (not V2) (not V4))\n       (and (not V1) V2 (not V4))\n       (and (not V1) (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_017e",
+      "code": "Or(And(V1, Not(V3), Not(V4)),\n   And(Not(V1), V2, Not(V4)),\n   And(Not(V2), V3, Not(V4)),\n   And(Not(V1), Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 (not V3) (not V4))\n       (and (not V1) V2 (not V4))\n       (and (not V2) V3 (not V4))\n       (and (not V1) (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_019f",
+      "code": "Or(And(Not(V3), Not(V4)),\n   And(Not(V1), Not(V2), Not(V4)),\n   And(Not(V1), Not(V2), Not(V3)),\n   And(V1, V2, Not(V4)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(declare-fun V3 () Bool)\n(assert (F (or (and (not V3) (not V4))\n       (and (not V1) (not V2) (not V4))\n       (and (not V1) (not V2) (not V3))\n       (and V1 V2 (not V4)))))\n"
+    },
+    {
+      "name": "formula_01bc",
+      "code": "Or(And(V2, Not(V3), Not(V4)),\n   And(V1, V2, Not(V4)),\n   And(Not(V2), V3, Not(V4)),\n   And(Not(V1), Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V2 (not V3) (not V4))\n       (and V1 V2 (not V4))\n       (and (not V2) V3 (not V4))\n       (and (not V1) (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_01be",
+      "code": "Or(And(V1, Not(V4)),\n   And(V2, Not(V3), Not(V4)),\n   And(Not(V2), V3, Not(V4)),\n   And(Not(V1), Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 (not V4))\n       (and V2 (not V3) (not V4))\n       (and (not V2) V3 (not V4))\n       (and (not V1) (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_01ee",
+      "code": "Or(And(V1, Not(V4)),\n   And(V2, Not(V4)),\n   And(Not(V1), Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 (not V4)) (and V2 (not V4)) (and (not V1) (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_0357",
+      "code": "Or(And(Not(V1), Not(V4)), And(Not(V2), Not(V3)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V4 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) (not V4)) (and (not V2) (not V3)))))\n"
+    },
+    {
+      "name": "formula_0359",
+      "code": "Or(And(Not(V1), Not(V2), Not(V4)),\n   And(V1, V2, Not(V3), Not(V4)),\n   And(Not(V1), V3, Not(V4)),\n   And(Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) (not V2) (not V4))\n       (and V1 V2 (not V3) (not V4))\n       (and (not V1) V3 (not V4))\n       (and (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_036f",
+      "code": "Or(And(Not(V3), Not(V4)),\n   And(Not(V2), Not(V3)),\n   And(V1, Not(V2), Not(V4)),\n   And(Not(V1), V2, Not(V4)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(declare-fun V3 () Bool)\n(assert (F (or (and (not V3) (not V4))\n       (and (not V2) (not V3))\n       (and V1 (not V2) (not V4))\n       (and (not V1) V2 (not V4)))))\n"
+    },
+    {
+      "name": "formula_03c7",
+      "code": "Or(And(Not(V2), Not(V3)),\n   And(Not(V1), V2, Not(V4)),\n   And(V2, V3, Not(V4)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V2) (not V3)) (and (not V1) V2 (not V4)) (and V2 V3 (not V4)))))\n"
+    },
+    {
+      "name": "formula_03d8",
+      "code": "Or(And(V1, V2, Not(V4)),\n   And(Not(V1), V3, Not(V4)),\n   And(Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 V2 (not V4))\n       (and (not V1) V3 (not V4))\n       (and (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_03dd",
+      "code": "Or(And(Not(V1), Not(V4)),\n   And(V2, Not(V4)),\n   And(Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) (not V4)) (and V2 (not V4)) (and (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_0679",
+      "code": "Or(And(Not(V1), Not(V2), Not(V4)),\n   And(V1, V2, Not(V3), Not(V4)),\n   And(Not(V2), V3, Not(V4)),\n   And(Not(V1), V3, Not(V4)),\n   And(V1, Not(V2), Not(V3), V4),\n   And(Not(V1), V2, Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) (not V2) (not V4))\n       (and V1 V2 (not V3) (not V4))\n       (and (not V2) V3 (not V4))\n       (and (not V1) V3 (not V4))\n       (and V1 (not V2) (not V3) V4)\n       (and (not V1) V2 (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_067b",
+      "code": "Or(And(Not(V2), Not(V4)),\n   And(V1, Not(V3), Not(V4)),\n   And(V1, Not(V2), Not(V3)),\n   And(Not(V1), V3, Not(V4)),\n   And(Not(V1), V2, Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V2) (not V4))\n       (and V1 (not V3) (not V4))\n       (and V1 (not V2) (not V3))\n       (and (not V1) V3 (not V4))\n       (and (not V1) V2 (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_0696",
+      "code": "Or(And(V1, Not(V2), Not(V3)),\n   And(Not(V1), V2, Not(V3)),\n   And(Not(V1), Not(V2), V3, Not(V4)),\n   And(V1, V2, V3, Not(V4)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 (not V2) (not V3))\n       (and (not V1) V2 (not V3))\n       (and (not V1) (not V2) V3 (not V4))\n       (and V1 V2 V3 (not V4)))))\n"
+    },
+    {
+      "name": "formula_0697",
+      "code": "Or(And(Not(V1), Not(V2), Not(V4)),\n   And(V1, Not(V2), Not(V3)),\n   And(Not(V1), V2, Not(V3)),\n   And(V1, V2, V3, Not(V4)))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) (not V2) (not V4))\n       (and V1 (not V2) (not V3))\n       (and (not V1) V2 (not V3))\n       (and V1 V2 V3 (not V4)))))\n"
+    },
+    {
+      "name": "formula_06b4",
+      "code": "Or(And(Not(V1), V2, Not(V3)),\n   And(Not(V2), V3, Not(V4)),\n   And(V1, V3, Not(V4)),\n   And(V1, Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) V2 (not V3))\n       (and (not V2) V3 (not V4))\n       (and V1 V3 (not V4))\n       (and V1 (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_0779",
+      "code": "Or(And(Not(V1), Not(V2), Not(V4)),\n   And(V1, V2, Not(V3), Not(V4)),\n   And(Not(V2), V3, Not(V4)),\n   And(Not(V1), V3, Not(V4)),\n   And(Not(V2), Not(V3), V4),\n   And(Not(V1), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V1 () Bool)\n(declare-fun V2 () Bool)\n(assert (F (or (and (not V1) (not V2) (not V4))\n       (and V1 V2 (not V3) (not V4))\n       (and (not V2) V3 (not V4))\n       (and (not V1) V3 (not V4))\n       (and (not V2) (not V3) V4)\n       (and (not V1) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_07b4",
+      "code": "Or(And(Not(V1), V2, Not(V3)),\n   And(Not(V2), V3, Not(V4)),\n   And(V1, V3, Not(V4)),\n   And(Not(V2), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and (not V1) V2 (not V3))\n       (and (not V2) V3 (not V4))\n       (and V1 V3 (not V4))\n       (and (not V2) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_07e0",
+      "code": "Or(And(V1, V3, Not(V4)),\n   And(V2, V3, Not(V4)),\n   And(Not(V2), Not(V3), V4),\n   And(Not(V1), Not(V3), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V1 () Bool)\n(declare-fun V2 () Bool)\n(assert (F (or (and V1 V3 (not V4))\n       (and V2 V3 (not V4))\n       (and (not V2) (not V3) V4)\n       (and (not V1) (not V3) V4))))\n"
+    },
+    {
+      "name": "formula_168e",
+      "code": "Or(And(V1, Not(V2), Not(V3)),\n   And(Not(V1), V2, Not(V3)),\n   And(V1, V2, Not(V4)),\n   And(Not(V1), Not(V2), V3, V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V3 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(assert (F (or (and V1 (not V2) (not V3))\n       (and (not V1) V2 (not V3))\n       (and V1 V2 (not V4))\n       (and (not V1) (not V2) V3 V4))))\n"
+    },
+    {
+      "name": "formula_177e",
+      "code": "Or(And(V1, Not(V3), Not(V4)),\n   And(Not(V1), V2, Not(V4)),\n   And(Not(V2), V3, Not(V4)),\n   And(Not(V2), Not(V3), V4),\n   And(Not(V1), Not(V3), V4),\n   And(Not(V1), Not(V2), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(declare-fun V3 () Bool)\n(assert (F (or (and V1 (not V3) (not V4))\n       (and (not V1) V2 (not V4))\n       (and (not V2) V3 (not V4))\n       (and (not V2) (not V3) V4)\n       (and (not V1) (not V3) V4)\n       (and (not V1) (not V2) V4))))\n"
+    },
+    {
+      "name": "formula_178e",
+      "code": "Or(And(V1, Not(V2), Not(V3)),\n   And(Not(V1), V2, Not(V3)),\n   And(V1, V2, Not(V4)),\n   And(Not(V1), Not(V2), V4))",
+      "smtlib2": "(declare-fun F (Bool) Bool)\n(declare-fun V4 () Bool)\n(declare-fun V2 () Bool)\n(declare-fun V1 () Bool)\n(declare-fun V3 () Bool)\n(assert (F (or (and V1 (not V2) (not V3))\n       (and (not V1) V2 (not V3))\n       (and V1 V2 (not V4))\n       (and (not V1) (not V2) V4))))\n"
+    }
+  ]
+}

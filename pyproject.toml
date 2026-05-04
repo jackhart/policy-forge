@@ -6,11 +6,13 @@ requires-python = ">=3.10"
 dependencies = [
     "z3-solver",
     "inspect_ai",
+    "pydantic",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
+    "jupytext",
 ]
 
 [build-system]
