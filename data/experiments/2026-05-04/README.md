@@ -93,22 +93,19 @@ Symmetry class 1 has only one variance level (0), so its budget is sampled unifo
 The two highest variance levels in symmetry class 3 only have one formula each, so both are taken.
 
 
-## Results 
-
-TODO
-
-## Next Steps
+## Takeaways / Next Steps
 
 Didn't find much. But there are a few small threads to pull on.
+
 - Sonnet is clearly capable of 4 variable boolean function reconstruction. Which isn't really surprising at all. Should try on older and open source models if I want to look at activations.
-- Didn't see any compelling patterns with symmetry and variable influence. But there was one anomalous function that Sonnet got consistently wrong ({ab}, {ac}, {ad}, {bcd}). This might be an interesting class of functions I can poke at.
+- Didn't see any compelling patterns with symmetry and variable influence that held up under closer examination of the data. But there was one anomalous function that Sonnet got consistently wrong ({ab}, {ac}, {ad}, {bcd}). This might be an interesting class of functions I can poke at.
 - Realism scores are totally inaccurate. At least a third of the generated prose doesn't make logical sense within its context. Both the prose and judge are addressing "realism" based on surface patterns. I *think* this can be fixed w/ some prompting tweaks.
 - Formulas are in **DNF**. I think nested forms are an avenue to look into. What I liked about this experiment was the rigor of its setup w/ the formulas, so I'd need to think about how to extend this meaningfully into nested functions w/out losing that.
 
 ### Formula {ab, ac, ad, bcd}
 
-Since there were so many failures w/ the {ab, ac, ad, bcd} formula, 
-I used Claude to generate this potential functional form to test. 
+Since there were so many failures w/ the {ab, ac, ad, bcd} formula,
+I used Claude to generate this potential functional form to test.
 I doubt this will work, but might be interesting to poke at.
 
 ```text
@@ -134,3 +131,35 @@ n=7:  D=0, h=1, k=6:  {ab, ac, ad, ae, af, ag, bcdefg}
       D=1, h=2, k=4:  {a, bcd, bce, bcf, bcg, defg}
       D=1, h=3, k=3:  {a, bcde, bcdf, bcdg, efg}
 ```
+
+## Realism prompt fragments
+
+The realism gap likely comes from poor prompting around realism requirments. Both the prose and judge LMs address realism through surface level features like (names, organizations, etc.) rather than if the generated prose makes logical sense within its context.
+
+### Example
+
+`formula_0001_retaliation`, formula `And(Not(V1), Not(V2), Not(V3), Not(V4))`. Generated prose:
+
+> Disciplinary action against an employee is prohibited when the employee has not filed a formal complaint within the past 12 months, has not provided testimony in any internal investigation, has not reported violations to external regulatory agencies, and has not requested workplace accommodations or modifications.
+
+This makes no sense as an anti-retaliation policy. But the judge scored this `realism=0.7` (high), with `realism_reason="Reads as a plausible (if slightly odd) HR/retaliation policy snippet, though the logical framing is unusual for a real policy."` It noticed the framing was off and scored high anyway, because the criterion it was given is "reads like a real policy snippet," not "describes a coherent policy."
+
+### Prose LM: `REALISM REQUIREMENTS` block
+
+> Models are very bad at inventing names and have specific tells (overusing "Sarah", Chinese-American names, generically diverse combinations of common first/last names from random ethnicities). Sample randomly from these lists first ... \[name list]
+>
+> Use real organizations when appropriate: \[org list]
+>
+> Never use: "Pinnacle X", "Nexus Y", "Sentinel Z" ... Never use "Sarah" (especially "Sarah Chen") ...
+>
+> Avoid LLM tells: no em-dashes, no "utilize", no "leverage", no "straightforward", no "comprehensive". Write like a human policy analyst, not a language model.
+>
+> Be specific: dollar amounts, weight limits, license numbers, dates, department names.
+
+### Judge: `realism` field
+
+> realism: 0.0-1.0. Could the prose policy plausibly appear in a real policy document (legal, HR, regulatory, contract)?
+> Low (~0.0-0.3) -- obviously synthetic, awkward phrasing, references variables by name, weird structure.
+> High (~0.7-1.0) -- reads like a real policy snippet.
+
+Neither asks whether the conditions, under the formula's polarity pattern, produce a coherent rule in the named domain.
