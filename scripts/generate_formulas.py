@@ -1,13 +1,10 @@
-"""Enumerate unique 4-variable boolean functions and sample n of them as Z3
-formulas in minimum sum-of-products form.
+"""Sample canonical n-variable boolean functions and emit them as Z3 formulas
+in minimum sum-of-products form.
 
-Two functions count as the same if you can turn one into the other by some
-combination of: renaming inputs, flipping inputs, flipping the output. Under
-that "same" relation, the 65,536 possible 4-var functions partition into 222
-groups; 208 of those groups have a representative that uses all 4 variables.
-Each group is named by its smallest truth table number. For each sampled
-function we run Quine-McCluskey to get a minimum sum-of-products cover and
-emit it as a Z3 expression.
+Canonical truth tables are loaded from data/npn_<n>var.bin (lex-min
+representative per NPN-equivalence class, restricted to functions that depend
+on all variables). For each sampled function we run Quine-McCluskey to get a
+minimum sum-of-products cover and emit it as a Z3 expression.
 
 Two structural features are computed for every function and emitted alongside
 the formula:
@@ -41,6 +38,7 @@ Usage:
 import argparse
 import json
 import random
+import struct
 from dataclasses import dataclass
 from itertools import permutations
 from pathlib import Path
@@ -51,11 +49,9 @@ V1, V2, V3, V4 = Bool("V1"), Bool("V2"), Bool("V3"), Bool("V4")
 VARS = (V1, V2, V3, V4)
 NUM_VARS = 4
 NUM_ROWS = 2**NUM_VARS  # 16 input settings per function
-NUM_FUNCTIONS = 2**NUM_ROWS  # 65,536 possible 4-var functions
-TT_MASK = NUM_FUNCTIONS - 1  # all 16 output bits set; flips outputs via XOR
+TT_MASK = (1 << NUM_ROWS) - 1  # all 16 output bits set; flips outputs via XOR
 
-EXPECTED_UNIQUE_FUNCTIONS = 222
-EXPECTED_FUNCTIONS_USING_ALL_VARS = 208
+NPN_POOL_PATH = Path(__file__).resolve().parent.parent / "data" / f"npn_{NUM_VARS}var.bin"
 
 STRATIFIED_N = 80
 STRATIFIED_BUDGET = {1: 8, 2: 28, 3: 28, 4: 16}
@@ -93,18 +89,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    unique = _unique_functions()
-    if len(unique) != EXPECTED_UNIQUE_FUNCTIONS:
-        raise RuntimeError(
-            f"Expected {EXPECTED_UNIQUE_FUNCTIONS} unique functions, got {len(unique)}"
-        )
-
-    pool = [tt for tt in unique if _depends_on_all_vars(tt)]
-    if len(pool) != EXPECTED_FUNCTIONS_USING_ALL_VARS:
-        raise RuntimeError(
-            f"Expected {EXPECTED_FUNCTIONS_USING_ALL_VARS} functions using all vars, "
-            f"got {len(pool)}"
-        )
+    pool = _load_npn_pool(NPN_POOL_PATH, NUM_VARS)
 
     if args.n > len(pool):
         raise SystemExit(f"Requested {args.n} > available {len(pool)}")
@@ -220,32 +205,14 @@ def _influence(tt: int, var_idx: int) -> float:
     return flips / NUM_ROWS
 
 
-def _unique_functions() -> list[int]:
-    """Returns list of ints, each representing a 'canonical' example of an NPN function"""
-    seen, canonicals = set(), []
-    for tt in range(NUM_FUNCTIONS):
-        if tt in seen:
-            continue
-        group = _equivalents(tt)
-        canonicals.append(min(group))
-        seen.update(group)
-    return sorted(set(canonicals))
-
-
-def _equivalents(tt: int) -> set[int]:
-    """Truth tables reachable from tt by:
-        - reordering V1..V4 (24)
-        - negating any subset of inputs (16)
-        - negating the output or not (2)
-    Up to 24 * 16 * 2 = 768 results, deduped via set.
-    """
-    out: set[int] = set()
-    for perm in permutations(range(NUM_VARS)):  # (0,1,2,3)
-        for negate_mask in range(NUM_ROWS):  # 0000 - 4 bits
-            transformed = _transform(tt, perm, negate_mask)
-            out.add(transformed)
-            out.add(_negate_outputs(transformed))
-    return out
+def _load_npn_pool(path: Path, n_vars: int) -> tuple[int, ...]:
+    """Read sorted canonical NPN truth tables packed as little-endian unsigned
+    ints, one entry per function. Each entry is 2**n_vars bits wide."""
+    bytes_per_entry = max(1, (1 << n_vars) // 8)
+    fmt = {1: "<B", 2: "<H", 4: "<I", 8: "<Q"}[bytes_per_entry]
+    with open(path, "rb") as f:
+        data = f.read()
+    return tuple(value for (value,) in struct.iter_unpack(fmt, data))
 
 
 def _transform(tt: int, perm: tuple[int, ...], negate_mask: int) -> int:
@@ -265,13 +232,6 @@ def _reorder_bits(row: int, perm: tuple[int, ...]) -> int:
         if _bit(row, i):
             out |= 1 << perm[i]
     return out
-
-
-def _depends_on_all_vars(tt: int) -> bool:
-    return all(
-        any(_bit(tt, r) != _bit(tt, _flip(r, i)) for r in range(NUM_ROWS))
-        for i in range(NUM_VARS)
-    )
 
 
 def _tt_to_z3(tt: int) -> BoolRef:
@@ -366,13 +326,6 @@ def _bit(x: int, i: int) -> int:
 def _flip(x: int, i: int) -> int:
     """Return x with bit i flipped. (1 << i) is the integer with only bit i set."""
     return x ^ (1 << i)
-
-
-def _negate_outputs(tt: int) -> int:
-    """Return the function whose output is the negation of tt's output at every
-    row. XOR with TT_MASK (all 16 bits set) inverts each of the 16 output bits.
-    """
-    return tt ^ TT_MASK
 
 
 def _is_power_of_two(x: int) -> bool:
