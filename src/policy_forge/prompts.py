@@ -38,6 +38,9 @@ requirements.
 
 REALISM REQUIREMENTS:
 
+The policy must actually make sense as a rule in its domain, not just \
+sound like one. Sounding like a policy is not enough.
+
 Models are very bad at inventing names and have specific tells \
 (overusing "Sarah", Chinese-American names, generically diverse \
 combinations of common first/last names from random ethnicities). \
@@ -302,10 +305,13 @@ behaviors.
   Variable reordering must not affect this score.
 - interestingness_reason: 1-2 sentences. Name the pattern.
 - realism: 0.0-1.0. Could the prose policy plausibly appear in a real \
-policy document (legal, HR, regulatory, contract)?
+policy document (legal, HR, regulatory, contract)? The rule has to \
+actually make sense, not just read like a policy.
   Low (~0.0-0.3) -- obviously synthetic, awkward phrasing, references \
-variables by name, weird structure.
-  High (~0.7-1.0) -- reads like a real policy snippet.
+variables by name, weird structure, or describes a rule that wouldn't \
+exist in a real document.
+  High (~0.7-1.0) -- reads like a real policy snippet and describes a \
+rule a real document would contain.
 - realism_reason: 1-2 sentences.
 """
 
